@@ -3,7 +3,11 @@
     <test name="MyTest">
         <classes>
             <class name="FirstTest"/>
+            <class name="SecondTest"/>
+            <class name="ThirdTest"/>
             <class name="ForthTest"/>
+            <class name="FifthTest"/>
+            <class name="SixthTest"/>
         </classes>
     </test>
 </suite>

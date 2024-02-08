@@ -1,5 +1,6 @@
 import org.apache.hc.core5.reactor.Command;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -30,7 +31,7 @@ public class ForthTest {
         wait = new WebDriverWait(webDriver, 20);
     }
 
-    @Test (priority = 1)
+    @Test
     public void testLogin() throws InterruptedException {
         String username = "petrakis1";
         String password = "Petrakis$.1";
@@ -42,21 +43,22 @@ public class ForthTest {
         usernameInput.sendKeys(username);
         passwordInput.sendKeys(password);
 
-        Actions action = new Actions(webDriver);
-        action.moveToElement(loginButton).click().build().perform();
-        webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView(true);", loginButton);
+        loginButton.click();
+
 
         WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("main-header")));
         Assert.assertEquals(successMessage.getText(), "Login");
         Thread.sleep(5000);
     }
-    @Test(priority = 2)
+    @Test(dependsOnMethods = "testLogin")
     public void testLogout() {
         By logoutButtonLocator = By.className("btn-primary");
         WebElement logoutButton = wait.until(ExpectedConditions.elementToBeClickable(logoutButtonLocator));
         logoutButton.click();
     }
-    @Test (priority = 3)
+    @Test(dependsOnMethods = "testLogout")
     public void testLogin_wrongInputs() throws InterruptedException {
         Thread.sleep(5000);
         String username = "petrakis1wrong";
@@ -69,8 +71,7 @@ public class ForthTest {
         usernameInput.sendKeys(username);
         passwordInput.sendKeys(password);
 
-        Actions action = new Actions(webDriver);
-        action.moveToElement(loginButton).click().build().perform();
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView(true);", loginButton);
         webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("main-header")));

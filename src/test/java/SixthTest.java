@@ -21,8 +21,6 @@ public class SixthTest {
         webDriver.get("https://demoqa.com/automation-practice-form");
         new WebDriverWait(webDriver, 10).until(ExpectedConditions.elementToBeClickable((By.xpath("/html/body/div[3]/div[2]/div[1]/div[2]/div[2]/button[1]")))).click();
         wait = new WebDriverWait(webDriver, 20);
-        webDriver.manage().window().setSize(new Dimension(1280, 595));
-
     }
 
     @Test
