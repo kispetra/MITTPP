@@ -23,7 +23,6 @@ public class FirstTest {
 
     @Test
     public void testPageTitle() {
-
         String expectedTitle = "DEMOQA";
         WebDriverWait wait = new WebDriverWait(webdriver, 10);
         wait.until(ExpectedConditions.titleIs(expectedTitle));

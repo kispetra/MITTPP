@@ -31,7 +31,7 @@ public class ForthTest {
     }
 
     @Test (priority = 1)
-    public void testLogin() {
+    public void testLogin() throws InterruptedException {
         String username = "petrakis1";
         String password = "Petrakis$.1";
 
@@ -48,6 +48,33 @@ public class ForthTest {
 
         WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("main-header")));
         Assert.assertEquals(successMessage.getText(), "Login");
+        Thread.sleep(5000);
+    }
+    @Test(priority = 2)
+    public void testLogout() {
+        By logoutButtonLocator = By.className("btn-primary");
+        WebElement logoutButton = wait.until(ExpectedConditions.elementToBeClickable(logoutButtonLocator));
+        logoutButton.click();
+    }
+    @Test (priority = 3)
+    public void testLogin_wrongInputs() throws InterruptedException {
+        Thread.sleep(5000);
+        String username = "petrakis1wrong";
+        String password = "Petrakis$.1";
+
+        WebElement usernameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"userName\"]")));
+        WebElement passwordInput = webDriver.findElement(By.xpath("//*[@id=\"password\"]"));
+        WebElement loginButton = webDriver.findElement(By.xpath("//*[@id=\"login\"]"));
+
+        usernameInput.sendKeys(username);
+        passwordInput.sendKeys(password);
+
+        Actions action = new Actions(webDriver);
+        action.moveToElement(loginButton).click().build().perform();
+        webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+        WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("main-header")));
+        Assert.assertNotEquals(successMessage.getText(), null);
     }
 
     @AfterClass
