@@ -52,7 +52,7 @@ public class ThirdTest {
         clearSearchBox();
     }
 
-    @Test(priority = 1)
+    @Test(dependsOnMethods = "testSearchByNonExistingTitle")
     public void testSearchByTitle() {
         String searchTitle = "Git Pocket Guide";
         performSearch(searchTitle);
